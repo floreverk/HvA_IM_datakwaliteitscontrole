@@ -78,7 +78,8 @@ def choose():
             e = a[e]
 
             # all images in directory: existing excelquery
-            xls = pd.ExcelFile(r'V:\Depshare AGB Erfgoed\Industriemuseum-Huis van Alijn\5_KENNIS_STRATEGIE\10_PROJECTEN\COGHENT\WP5_Content\Handleidingen\VOLLEDIGE_R_SCHIJF.xlsx')
+            xls = pd.ExcelFile(r'V:\Depshare AGB Erfgoed\Industriemuseum-Huis van Alijn\5_KENNIS_STRATEGIE\10_PROJECTEN'
+                               r'\COGHENT\WP5_Content\Handleidingen\VOLLEDIGE_R_SCHIJF.xlsx')
             df = pd.read_excel(xls, 'COLLECTIE HVA')
 
             # comparison missing images & images in directory
@@ -313,7 +314,7 @@ def choose():
         blank2.grid(row=6, column=1)
 
         buttonstart = Button(hva_im_app, text="csv opladen", padx=20, pady=10, borderwidth=4, bg="#eacb48",
-                                 command=start)
+                             command=start)
         buttonstart.grid(row=7, column=1, columnspan=4)
 
     else:
@@ -351,7 +352,8 @@ def choose():
             e = a[e]
 
             # all images in directory: existing excelquery
-            xls = pd.ExcelFile(r'V:\Depshare AGB Erfgoed\Industriemuseum-Huis van Alijn\5_KENNIS_STRATEGIE\10_PROJECTEN\COGHENT\WP5_Content\Handleidingen\VOLLEDIGE_R_SCHIJF.xlsx')
+            xls = pd.ExcelFile(r'V:\Depshare AGB Erfgoed\Industriemuseum-Huis van Alijn\5_KENNIS_STRATEGIE\10_PROJECTEN'
+                               r'\COGHENT\WP5_Content\Handleidingen\VOLLEDIGE_R_SCHIJF.xlsx')
             df = pd.read_excel(xls, 'COLLECTIE INDUSTRIEMUSEUM')
 
             # comparison missing images & images in directory
@@ -372,13 +374,16 @@ def choose():
             # data stats
 
             # 1. objectnummers
-            AF_IM = a["objectnummer"].str.startswith('AF', na=True).count()
-            DC_IM = a["objectnummer"].str.startswith('DC', na=True).count()
-            D_IM = a["objectnummer"].str.startswith('D', na=True).count() - DC_IM
-            F_IM = a["objectnummer"].str.startswith('F', na=True).count()
-            RE_IM = a["objectnummer"].str.startswith('RE', na=True).count()
-            V_IM = a["objectnummer"].str.startswith('V', na=True).count()
-            objectnummer = [AF_IM, DC_IM, D_IM, F_IM, RE_IM, V_IM]
+            af_im = a[a["objectnummer"].str.startswith('AF', na=True)].count()[0]
+            print(af_im)
+            dc_im = a[a["objectnummer"].str.startswith('DC', na=True)].count()[0]
+            print(dc_im)
+            d_im = a[a["objectnummer"].str.startswith('D', na=True)].count()[0] - dc_im
+            f_im = a[a["objectnummer"].str.startswith('F', na=True)].count()[0]
+            re_im = a[a["objectnummer"].str.startswith('RE', na=True)].count()[0]
+            v_im = a[a["objectnummer"].str.startswith('V', na=True)].count()[0]
+            print(v_im)
+            objectnummer = [af_im, dc_im, d_im, f_im, re_im, v_im]
             o_n = ['AF', 'DC', 'D', 'F', 'RE', 'V']
 
             # 2.
@@ -456,15 +461,15 @@ def choose():
             chart.add_data(graph1)
             chart.set_categories(titles1)
 
-            # onderscheidende kenmerken
+            # objectnummer
             r3 = 19
             for ok in o_n:
                 ws.cell(row=r3, column=4).value = ok
                 r3 += 1
 
             r4 = 19
-            for onderken in objectnummer:
-                ws.cell(row=r4, column=5).value = onderken
+            for objn in objectnummer:
+                ws.cell(row=r4, column=5).value = objn
                 r4 += 1
 
             graph2 = Reference(ws, min_col=5, min_row=19, max_col=5, max_row=24)
@@ -544,7 +549,7 @@ def choose():
         blank2.grid(row=6, column=1)
 
         buttonstart = Button(hva_im_app, text="csv opladen", padx=20, pady=10, borderwidth=4, bg="#eacb48",
-                                 command=start)
+                             command=start)
         buttonstart.grid(row=7, column=1, columnspan=4)
 
 
