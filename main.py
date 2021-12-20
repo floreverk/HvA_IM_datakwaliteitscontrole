@@ -9,12 +9,18 @@ from tkinter.ttk import *
 from tkinter import *
 
 hva_im_app = Tk()
-hva_im_app.title('adlib kwaliteitscheck')
+hva_im_app.title('im_hva datakwaliteitscontrole')
 
 
 def info():
     infowindow = Toplevel()
-    infolabel = Label(infowindow, text="This tool ...")
+    infolabel = Label(infowindow, text="De tool neemt een exportlijst uit Adlib en voert een aantal "
+                                       "kwaliteitschecks uit. Deze kan je hierna opslaan als Excel op een locatie naar "
+                                       "keuze.\n\nDe export uit Adlib moet volgende kolommen bevatten: \n\n"
+                                       "instelling.naam\nobjectnummer\nobjectnaam\ntitel\nassociatie.onderwerp\n"
+                                       "associatie.periode\nreproductie.referentie\nonderscheidende_kenmerken\n"
+                                       "afmeting.eenheid\nafmeting.waarde\n\nAls format wordt gekozen voor een "
+                                       "csv met bij instellingen als veldscheiding ';'. ", justify=LEFT)
     infolabel.grid(row=0, column=0)
 
 
@@ -25,8 +31,10 @@ def openfile():
 
 def save_file():
     location = filedialog.askdirectory(title="save file")
-    show_location = Label(hva_im_app, text='de output vind je hier:' + location, bg="#e4e5e5")
-    show_location.grid(column=2, row=8)
+    blank2 = Label(hva_im_app, text="", bg="#eff0eb")
+    blank2.grid(column=1, row=8)
+    show_location = Label(hva_im_app, text='de output kan je hier vinden: ' + location, bg="#eff0eb")
+    show_location.grid(column=1, row=9)
     return location
 
 
@@ -295,16 +303,16 @@ def choose():
                     ws.cell(row=r_idx, column=c_idx, value=value)
             wb.save(save_file() + r"\output.xlsx")
 
-        blank = Label(text="", bg="#e4e5e5")
+        blank = Label(text="", bg="#eff0eb")
         blank.grid(row=4, column=1)
 
-        _info = Label(text="Press Start", bg="#e4e5e5")
+        _info = Label(text="Klik om een csv op te laden", bg="#eff0eb")
         _info.grid(row=5, column=1)
 
-        blank2 = Label(text="", bg="#e4e5e5")
+        blank2 = Label(text="", bg="#eff0eb")
         blank2.grid(row=6, column=1)
 
-        buttonstart = Button(hva_im_app, text="Start", padx=50, pady=10, borderwidth=4, bg="#04a37b",
+        buttonstart = Button(hva_im_app, text="csv opladen", padx=20, pady=10, borderwidth=4, bg="#eacb48",
                                  command=start)
         buttonstart.grid(row=7, column=1, columnspan=4)
 
@@ -351,6 +359,8 @@ def choose():
             f.drop('Bestandsnaam', inplace=True, axis=1)
             f.drop('Extensie', inplace=True, axis=1)
             f.drop('Bestandsgrootte', inplace=True, axis=1)
+            f.drop('Recordnummer', inplace=True, axis=1)
+            f.drop('Objectnummer', inplace=True, axis=1)
 
             # 5. missing afmeting
             g = pd.isna(a['afmetingwaarde'])
@@ -524,42 +534,42 @@ def choose():
                     ws.cell(row=r_idx, column=c_idx, value=value)
             wb.save(save_file() + r"\output.xlsx")
 
-        blank = Label(text="", bg="#e4e5e5")
+        blank = Label(text="", bg="#eff0eb")
         blank.grid(row=4, column=1)
 
-        _info = Label(text="Press Start", bg="#e4e5e5")
+        _info = Label(text="Klik om een csv op te laden", bg="#eff0eb")
         _info.grid(row=5, column=1)
 
-        blank2 = Label(text="", bg="#e4e5e5")
+        blank2 = Label(text="", bg="#eff0eb")
         blank2.grid(row=6, column=1)
 
-        buttonstart = Button(hva_im_app, text="Start", padx=50, pady=10, borderwidth=4, bg="#04a37b",
+        buttonstart = Button(hva_im_app, text="csv opladen", padx=20, pady=10, borderwidth=4, bg="#eacb48",
                                  command=start)
         buttonstart.grid(row=7, column=1, columnspan=4)
 
 
-hva_im_app.configure(bg="#e4e5e5")
+hva_im_app.configure(bg="#eff0eb")
 hva_im_app.geometry("900x550")
 
-Info = Label(text="Kies je instelling en druk op start")
+Info = Label(text="Maak je keuze en druk op ok", bg="#eff0eb")
 Info.grid(row=0, column=1)
 
-blank6 = Label(text="", bg="#e4e5e5")
+blank6 = Label(text="", bg="#eff0eb")
 blank6.grid(row=2, column=1)
 
 variable = StringVar()
 variable2 = StringVar()
 
-hva = Checkbutton(hva_im_app, text="Huis van Alijn", variable=variable, onvalue="hva", offvalue="", bg="#e4e5e5")
-im = Checkbutton(hva_im_app, text="Industriemuseum", variable=variable2, onvalue="im", offvalue="", bg="#e4e5e5")
+hva = Checkbutton(hva_im_app, text="Huis van Alijn", variable=variable, onvalue="hva", offvalue="", bg="#eff0eb")
+im = Checkbutton(hva_im_app, text="Industriemuseum", variable=variable2, onvalue="im", offvalue="", bg="#eff0eb")
 
 hva.grid(row=1, column=1)
 im.grid(row=1, column=2)
 
-startknop = Button(hva_im_app, text="start", command=choose)
+startknop = Button(hva_im_app, text="ok", padx=20, pady=10, borderwidth=4, bg="#eacb48", command=choose)
 startknop.grid(row=3, column=1)
 
-buttoninfo = Button(hva_im_app, text="Info", borderwidth=4, bg="#b9bcbb", command=info)
+buttoninfo = Button(hva_im_app, text="Info", borderwidth=4, bg="#c5c1bb", command=info)
 buttoninfo.grid(row=1, column=0)
 
 hva_im_app.mainloop()
