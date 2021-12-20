@@ -375,14 +375,11 @@ def choose():
 
             # 1. objectnummers
             af_im = a[a["objectnummer"].str.startswith('AF', na=True)].count()[0]
-            print(af_im)
             dc_im = a[a["objectnummer"].str.startswith('DC', na=True)].count()[0]
-            print(dc_im)
             d_im = a[a["objectnummer"].str.startswith('D', na=True)].count()[0] - dc_im
             f_im = a[a["objectnummer"].str.startswith('F', na=True)].count()[0]
             re_im = a[a["objectnummer"].str.startswith('RE', na=True)].count()[0]
             v_im = a[a["objectnummer"].str.startswith('V', na=True)].count()[0]
-            print(v_im)
             objectnummer = [af_im, dc_im, d_im, f_im, re_im, v_im]
             o_n = ['AF', 'DC', 'D', 'F', 'RE', 'V']
 
